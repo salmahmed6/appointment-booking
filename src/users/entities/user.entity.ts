@@ -36,9 +36,9 @@ export class User {
   })
   role: UserRole;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   @Exclude()
-  refreshToken: string;
+  refreshToken: string | null;
 
   @OneToMany(() => Service, (service) => service.provider)
   services: Service[];

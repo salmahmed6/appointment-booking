@@ -32,7 +32,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
-  console.log('🚀 Server running on http://localhost:3000');
-  console.log('📚 Swagger docs available at http://localhost:3000/api');
+  console.log('Server running on http://localhost:3000');
+  console.log('Swagger docs available at http://localhost:3000/api');
 }
 bootstrap();

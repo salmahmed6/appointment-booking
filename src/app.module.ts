@@ -25,6 +25,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
         logging: true,
       }),
       inject: [ConfigService],
