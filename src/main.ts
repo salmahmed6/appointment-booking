@@ -12,7 +12,7 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: 'http://localhost:3001', // Your Next.js frontend URL
+    origin: 'http://localhost:3000', // Your Next.js frontend URL
     credentials: true,
   });
 
@@ -37,8 +37,8 @@ async function bootstrap() {
   });
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
-  console.log('Server running on http://localhost:3000');
-  console.log('Swagger docs available at http://localhost:3000/api');
+  await app.listen(3001);
+  console.log('Server running on http://localhost:3001');
+  console.log('Swagger docs available at http://localhost:3001/api');
 }
 bootstrap();
