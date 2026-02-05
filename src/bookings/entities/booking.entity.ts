@@ -28,7 +28,7 @@ export class Booking {
   @Column()
   clientId: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamp' })
   appointmentTime: Date;
 
   @Column({
