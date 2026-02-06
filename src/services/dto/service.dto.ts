@@ -5,7 +5,7 @@ export class CreateServiceDto {
   @ApiProperty({ example: 'Haircut Service' })
   @IsString()
   @MinLength(3)
-  name: string;
+  name!: string;
 
   @ApiProperty({ example: 'Professional haircut service', required: false })
   @IsOptional()
@@ -15,7 +15,7 @@ export class CreateServiceDto {
   @ApiProperty({ example: 60, description: 'Duration in minutes' })
   @IsInt()
   @Min(15)
-  duration: number;
+  duration!: number;
 }
 
 export class UpdateServiceDto {

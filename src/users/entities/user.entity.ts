@@ -18,37 +18,37 @@ export enum UserRole {
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column()
   @Exclude()
-  password: string;
+  password!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({
     type: 'enum',
     enum: UserRole,
   })
-  role: UserRole;
+  role!: UserRole;
 
   @Column({ type: 'varchar', nullable: true })
   @Exclude()
-  refreshToken: string | null;
+  refreshToken!: string | null;
 
   @OneToMany(() => Service, (service) => service.provider)
-  services: Service[];
+  services!: Service[];
 
   @OneToMany(() => Booking, (booking) => booking.client)
-  bookings: Booking[];
+  bookings!: Booking[];
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }

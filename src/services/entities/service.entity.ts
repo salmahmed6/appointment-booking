@@ -14,33 +14,33 @@ import { Booking } from '../../bookings/entities/booking.entity';
 @Entity('services')
 export class Service {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  description!: string;
 
   @Column({ type: 'int' })
-  duration: number; // Duration in minutes
+  duration!: number; // Duration in minutes
 
   @Column({ unique: true })
-  inviteCode: string;
+  inviteCode!: string;
 
   @Column()
-  providerId: string;
+  providerId!: string;
 
   @ManyToOne(() => User, (user) => user.services, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'providerId' })
-  provider: User;
+  provider!: User;
 
   @OneToMany(() => Booking, (booking) => booking.service)
-  bookings: Booking[];
+  bookings!: Booking[];
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }

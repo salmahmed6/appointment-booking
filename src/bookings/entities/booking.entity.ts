@@ -20,40 +20,40 @@ export enum BookingStatus {
 @Entity('bookings')
 export class Booking {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  serviceId: string;
+  serviceId!: string;
 
   @Column()
-  clientId: string;
+  clientId!: string;
 
   @Column({ type: 'timestamp' })
-  appointmentTime: Date;
+  appointmentTime!: Date;
 
   @Column({
     type: 'enum',
     enum: BookingStatus,
     default: BookingStatus.PENDING,
   })
-  status: BookingStatus;
+  status!: BookingStatus;
 
   @Column({ type: 'text', nullable: true })
-  notes: string;
+  notes!: string;
 
   @ManyToOne(() => Service, (service) => service.bookings, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'serviceId' })
-  service: Service;
+  service!: Service;
 
   @ManyToOne(() => User, (user) => user.bookings, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'clientId' })
-  client: User;
+  client!: User;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }

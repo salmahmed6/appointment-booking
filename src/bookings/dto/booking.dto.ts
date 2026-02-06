@@ -10,11 +10,11 @@ import { BookingStatus } from '../entities/booking.entity';
 export class CreateBookingDto {
   @ApiProperty({ example: 'ABC123', description: 'Service invite code' })
   @IsString()
-  inviteCode: string;
+  inviteCode!: string;
 
   @ApiProperty({ example: '2026-02-10T14:00:00Z' })
   @IsDateString()
-  appointmentTime: string;
+  appointmentTime!: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -25,5 +25,5 @@ export class CreateBookingDto {
 export class UpdateBookingStatusDto {
   @ApiProperty({ enum: BookingStatus })
   @IsEnum(BookingStatus)
-  status: BookingStatus;
+  status!: BookingStatus;
 }
