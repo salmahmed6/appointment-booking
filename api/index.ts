@@ -3,26 +3,26 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from '../src/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import express from 'express';
-import serverless from 'serverless-http';
+import express, { Express } from 'express';
 
-const server = express();
-let cachedApp;
+let app: Express;
 
 async function bootstrap() {
-  if (!cachedApp) {
+  if (!app) {
     try {
-      const app = await NestFactory.create(
+      const server = express();
+      
+      const nestApp = await NestFactory.create(
         AppModule,
         new ExpressAdapter(server),
       );
 
-      app.enableCors({
+      nestApp.enableCors({
         origin: '*',
         credentials: true,
       });
 
-      app.useGlobalPipes(
+      nestApp.useGlobalPipes(
         new ValidationPipe({
           whitelist: true,
           forbidNonWhitelisted: true,
@@ -31,7 +31,7 @@ async function bootstrap() {
       );
 
       // IMPORTANT: Initialize app BEFORE setting up Swagger
-      await app.init();
+      await nestApp.init();
 
       // Setup Swagger AFTER app.init()
       const config = new DocumentBuilder()
@@ -41,26 +41,29 @@ async function bootstrap() {
         .addBearerAuth()
         .build();
 
-      const document = SwaggerModule.createDocument(app, config);
-      SwaggerModule.setup('api', app, document);
+      const document = SwaggerModule.createDocument(nestApp, config);
+      SwaggerModule.setup('api', nestApp, document);
 
-      cachedApp = serverless(server);
-      console.log('NestJS app initialized successfully on Vercel');
+      app = server;
+      console.log(' NestJS app initialized successfully on Vercel');
     } catch (error) {
-      console.error('Failed to initialize NestJS app:', error);
+      console.error(' Failed to initialize NestJS app:', error);
       throw error;
     }
   }
 
-  return cachedApp;
+  return app;
 }
 
-export default async function handler(req, res) {
+export default async (req, res) => {
   try {
-    const app = await bootstrap();
-    return app(req, res);
+    const server = await bootstrap();
+    return server(req, res);
   } catch (error) {
     console.error('Handler error:', error);
-    res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    return res.status(500).json({ 
+      error: 'Internal Server Error', 
+      message: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
-}
+};
